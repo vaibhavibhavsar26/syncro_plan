@@ -1,0 +1,93 @@
+!pip install ortools
+import pandas as pd
+import random
+from ortools.sat.python import cp_model
+import numpy as np
+
+# Load datasets
+courses = pd.read_csv("courses.csv")
+faculty = pd.read_csv("faculty.csv")
+rooms = pd.read_csv("rooms.csv")
+students = pd.read_csv("students.csv")
+lectures = pd.read_csv("lectures.csv")
+labs = pd.read_csv("labs.csv")
+
+# Define available time slots sequentially for each day (9 AM - 1 PM)
+days = ["Mon", "Tue", "Wed", "Thu", "Fri"]
+time_slots = ["9-10", "10-11", "11-12", "12-1"]
+available_slots = [f"{day} {slot}" for day in days for slot in time_slots]
+
+# Initialize CSP model
+model = cp_model.CpModel()
+time_table = {}
+
+sessions = pd.concat([lectures.assign(Type='Lecture'), labs.assign(Type='Lab')]).reset_index(drop=True)
+
+for i, row in sessions.iterrows():
+    course_id = row["CourseID"]
+    faculty_id = row["FacultyID"] if pd.notna(row["FacultyID"]) else random.choice(faculty["FacultyID"].tolist())
+    room_id = row["RoomID"] if pd.notna(row["RoomID"]) else random.choice(rooms["RoomID"].tolist())
+    session_type = row["Type"]
+
+    var = model.NewIntVar(i, i, f"slot_{course_id}")  # Assign sequential slot
+    time_table[course_id] = (var, faculty_id, room_id, session_type)
+
+# Solve CSP model
+solver = cp_model.CpSolver()
+status = solver.Solve(model)
+
+timetable_results = []
+if status == cp_model.FEASIBLE or status == cp_model.OPTIMAL:
+    for i, (course_id, (var, faculty_id, room_id, session_type)) in enumerate(time_table.items()):
+        assigned_slot = available_slots[i % len(available_slots)]  # Sequential allocation
+        timetable_results.append([course_id, assigned_slot, faculty_id, room_id, session_type])
+
+# Convert to DataFrame
+output_df = pd.DataFrame(timetable_results, columns=["CourseID", "TimeSlot", "FacultyID", "RoomID", "Type"])
+
+# Genetic Algorithm for Optimization
+POPULATION_SIZE = 50
+GENERATIONS = 100
+MUTATION_RATE = 0.1
+
+def fitness(schedule):
+    penalty = 0
+    for i, (_, timeslot1, faculty1, room1, _) in enumerate(schedule):
+        for j, (_, timeslot2, faculty2, room2, _) in enumerate(schedule):
+            if i < j:
+                if timeslot1 == timeslot2:
+                    if faculty1 == faculty2 or room1 == room2:
+                        penalty += 1  # Penalty for clashes
+    return -penalty  # Lower penalty is better
+
+def mutate(schedule):
+    if random.random() < MUTATION_RATE:
+        i = random.randint(0, len(schedule) - 1)
+        schedule[i][1] = random.choice(available_slots)  # Randomly reassign a timeslot
+    return schedule
+
+def crossover(parent1, parent2):
+    point = random.randint(0, len(parent1) - 1)
+    child = parent1[:point] + parent2[point:]
+    return child
+
+def genetic_algorithm():
+    population = [timetable_results.copy() for _ in range(POPULATION_SIZE)]
+    for generation in range(GENERATIONS):
+        population.sort(key=fitness, reverse=True)
+        new_population = population[:10]  # Keep top 10 schedules
+        while len(new_population) < POPULATION_SIZE:
+            parent1, parent2 = random.sample(population[:20], 2)
+            child = crossover(parent1, parent2)
+            child = mutate(child)
+            new_population.append(child)
+        population = new_population
+    return population[0]
+
+optimized_schedule = genetic_algorithm()
+
+# Save optimized timetable
+optimized_df = pd.DataFrame(optimized_schedule, columns=["CourseID", "TimeSlot", "FacultyID", "RoomID", "Type"])
+optimized_df.to_csv("optimized_timetable.csv", index=False)
+print("Optimized timetable saved successfully!")
+you have to integrate this type of timetable generation in my code this incudes a code using csp and ga algorithms

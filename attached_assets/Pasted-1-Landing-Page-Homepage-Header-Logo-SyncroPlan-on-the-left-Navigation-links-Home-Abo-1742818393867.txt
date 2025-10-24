@@ -1,0 +1,191 @@
+1. Landing Page (Homepage)
+Header:
+
+Logo (SyncroPlan) on the left.
+
+Navigation links: Home, About, Contact, Login/Register (on the right).
+
+Hero Section:
+
+Welcome Message: "Welcome to SyncroPlan – Your Ultimate Academic and Personal Schedule Manager!"
+
+Subtext: "Sync your academic timetable with personal tasks seamlessly."
+
+CTA Buttons:
+
+Login (Primary Button)
+
+Register (Secondary Button)
+
+Learn More (Tertiary Button linking to the About Page)
+
+Footer:
+
+Quick links: About, Contact, Privacy Policy, Terms of Service.
+
+Social media icons.
+
+2. Authentication System
+Login Page:
+Title: "Login to SyncroPlan"
+
+Input fields:
+
+Email/Username
+
+Password
+
+Forgot Password? link below the password field.
+
+Login button (CTA).
+
+Don’t have an account? Register here link.
+
+Register Page:
+Title: "Create Your SyncroPlan Account"
+
+Input fields:
+
+Full Name
+
+Email
+
+Password
+
+Confirm Password
+
+User Type (Dropdown: Student/Faculty)
+
+Register button (CTA).
+
+Already have an account? Login here link.
+
+3. Professional Dashboard
+Header:
+
+Logo and navigation links: Dashboard, Timetable, Task Manager, Logout.
+
+Main Section:
+
+Title: "Your Academic Timetable"
+
+View Options: Toggle buttons for Day, Week, Month.
+
+Timetable Display:
+
+Grid layout with time slots (vertical) and days (horizontal).
+
+Color-coded entries for classes, labs, and other activities.
+
+Actions:
+
+Download Timetable (PDF) button.
+
+Update Schedule button (for faculty only).
+
+4. Personal Dashboard (For Students)
+Header:
+
+Same as Professional Dashboard.
+
+Main Section:
+
+Title: "Your Personal Schedule"
+
+Integrated View:
+
+Academic timetable (from Professional Dashboard).
+
+Personal tasks (Study sessions, Exercise, Hobbies, etc.).
+
+Add Task button:
+
+Opens a modal with fields: Task Name, Duration, Date/Time, Reminder.
+
+Task List:
+
+Each task has a checkbox to mark as completed.
+
+Drag-and-drop functionality to rearrange tasks.
+
+5. Timetable Generator (For Admin/Faculty)
+Header:
+
+Same as Professional Dashboard.
+
+Main Section:
+
+Title: "Generate Timetable"
+
+Input Fields:
+
+Subjects (Dropdown or Multi-select).
+
+Classrooms (Dropdown).
+
+Faculty Availability (Calendar view).
+
+Student Batch Details (Dropdown).
+
+Generate button:
+
+Displays optimized timetable in a grid layout.
+
+Conflict Resolution:
+
+Alerts for conflicts with suggestions to resolve.
+
+6. Task Manager (For Students)
+Header:
+
+Same as Professional Dashboard.
+
+Main Section:
+
+Title: "Task Manager"
+
+Task Creation:
+
+Input fields: Task Name, Duration, Date/Time, Reminder.
+
+Add Task button.
+
+Task List:
+
+Tasks grouped by Pending, Ongoing, Completed.
+
+Visual indicators (e.g., colored dots or progress bars).
+
+Edit and delete icons for each task.
+
+7. Additional Features
+Contact Page:
+Title: "Contact Us"
+
+Input fields:
+
+Name
+
+Email
+
+Subject
+
+Message
+
+Submit button.
+
+About Page:
+Title: "About SyncroPlan"
+
+Content:
+
+Description of SyncroPlan's purpose and features.
+
+Benefits for students and faculty.
+
+Team information (optional).
+
+Logout Button:
+Located in the header (top-right corner).
+
+Confirmation modal: "Are you sure you want to log out?"
